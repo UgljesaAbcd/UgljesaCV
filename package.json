@@ -1,0 +1,92 @@
+{
+  "name": "ugljesa-vojvodic-cv",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.4.3",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.2.0",
+    "@mui/lab": "^5.0.0-alpha.59",
+    "@mui/material": "^5.2.1",
+    "@mui/styles": "^5.2.1",
+    "@mui/x-data-grid": "^5.0.1",
+    "@react-pdf/renderer": "^2.3.0",
+    "@reduxjs/toolkit": "^1.8.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.4.3",
+    "assert": "^2.0.0",
+    "axios": "^0.26.1",
+    "buffer": "^6.0.3",
+    "dom-to-image": "^2.6.0",
+    "dom-to-image-fix": "^2.6.1",
+    "e": "^0.2.2",
+    "formik": "^2.2.9",
+    "html-react-parser": "^3.0.4",
+    "html-to-image": "^1.9.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "mui-rte": "^2.0.1",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intl-universal": "^2.4.12",
+    "react-location": "^3.3.4",
+    "react-location-simple-cache": "^3.3.3",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "stream-browserify": "^3.0.0",
+    "browserify-zlib": "^0.2.0",
+    "util": "^0.12.4",
+    "web-vitals": "^2.1.0",
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "starthttps": "set HTTPS=true&&craco start",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --coverage --colors --watchAll=true",
+    "eject": "craco eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@assets/(.*)$": "<rootDir>/src/assets/$1",
+      "^@common/(.*)$": "<rootDir>/src/common/$1",
+      "^@providers/(.*)$": "<rootDir>/src/providers/$1",
+      "^@components/(.*)$": "<rootDir>/src/components/$1",
+      "^@config/(.*)$": "<rootDir>/src/config/$1",
+      "^@hooks/(.*)$": "<rootDir>/src/hooks/$1",
+      "^@locales/(.*)$": "<rootDir>/src/locales/$1",
+      "^@navigation/(.*)$": "<rootDir>/src/navigation/$1",
+      "^@pages/(.*)$": "<rootDir>/src/pages/$1",
+      "^@services/(.*)$": "<rootDir>/src/services/$1"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@ui5|lit-html)).*\\.js$"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/react-hooks": "^8.0.1",
+    "axios-mock-adapter": "^1.21.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest-environment-jsdom-sixteen": "^2.0.0"
+  }
+}
