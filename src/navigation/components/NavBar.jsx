@@ -1,46 +1,65 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-location';
 
 import AppBar from '@mui/material/AppBar';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 
 import { ROUTER_PATHS } from '@common/constants';
+
+const StyledButton = styled(({ isActive, ...rest }) => (
+  <Button color='inherit' variant='raised' {...rest} />
+))(({ theme, isActive }) => ({
+  backgroundColor: isActive
+    ? theme.palette.primary.dark
+    : theme.palette.primary.main
+}));
 
 const NavBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   let pathname = window.location.pathname;
 
-  const onLogoClick = () => {
-    navigate({ to: ROUTER_PATHS.analyzer, replace: false });
+  const onLogoClick = path => {
+    navigate({ to: path, replace: false });
   };
 
   return (
     <AppBar
       position='static'
       sx={{
-        height: '62px',
+        // height: '32px',
         boxShadow: 0,
         display: 'inline-block',
         background: theme.palette.primary.main
       }}
     >
-      <Box sx={{ float: 'left' }}>
-        <Button
-          onClick={onLogoClick}
-          sx={{
-            backgroundColor: theme =>
-              pathname === ROUTER_PATHS.analyzer
-                ? `${theme.palette.primary.dark}`
-                : 'none'
-          }}
-          color='inherit'
-          variant='raised'
-          style={{ backgroundColor: 'transparent' }}
-          disabled={true}
-        ></Button>
+      <Box sx={{ float: 'right' }}>
+        <StyledButton
+          onClick={() => onLogoClick(ROUTER_PATHS.HOME)}
+          isActive={pathname === ROUTER_PATHS.HOME}
+        >
+          Home
+        </StyledButton>
+        <StyledButton
+          onClick={() => onLogoClick(ROUTER_PATHS.EDITOR)}
+          isActive={pathname === ROUTER_PATHS.EDITOR}
+        >
+          Editor
+        </StyledButton>
+        <StyledButton
+          onClick={() => onLogoClick(ROUTER_PATHS._3D)}
+          isActive={pathname === ROUTER_PATHS._3D}
+        >
+          3d
+        </StyledButton>
+        <StyledButton
+          onClick={() => onLogoClick(ROUTER_PATHS.GAME)}
+          isActive={pathname === ROUTER_PATHS.GAME}
+        >
+          Game
+        </StyledButton>
       </Box>
       <Box sx={{ float: 'right' }}></Box>
     </AppBar>

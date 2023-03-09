@@ -1,23 +1,35 @@
 import HomePage from '@pages/HomePage/HomePage';
-import CVPage from '@pages/CVPage/CVPage';
+import Editor from '@pages/Editor/Editor';
 import Secret from '@navigation/components/Secret';
+import My3D from '@pages/My3D/My3D';
+import Game from '@pages/Game/Game';
 
 import { ROUTER_PATHS } from '@common/constants';
 
 export default isLoggedIn => [
   {
-    path: ROUTER_PATHS.home,
+    path: ROUTER_PATHS.HOME,
     exact: true,
     element: <HomePage />
   },
   {
-    path: ROUTER_PATHS.secret,
+    path: ROUTER_PATHS.EDITOR,
     exact: true,
-    element: <Secret />
+    element: <Editor />
   },
   {
-    path: ROUTER_PATHS.other,
+    path: ROUTER_PATHS._3D,
     exact: true,
-    element: isLoggedIn ? <CVPage /> : <HomePage />
+    element: <My3D />
+  },
+  {
+    path: ROUTER_PATHS.GAME,
+    exact: true,
+    element: <Game />
+  },
+  {
+    path: ROUTER_PATHS.OTHER,
+    exact: true,
+    element: <HomePage />
   }
 ];

@@ -9,9 +9,11 @@ const NETWORK_STATUSES = {
 };
 
 const ROUTER_PATHS = Object.freeze({
-  home: '/',
-  secret: '/secret',
-  myapp: '/myapp'
+  HOME: '/',
+  EDITOR: '/editor',
+  _3D: '/3d',
+  GAME: '/game',
+  OTHER: '*'
 });
 
 export { ROUTER_PATHS, NETWORK_STATUSES, API };

@@ -1,3 +1,9 @@
 {
-  "language": "Deutsch"
+  "language": "Deutsch",
+  "navBar": {
+    "home": "Home",
+    "editor": "Editor",
+    "my3d": "My3D",
+    "game": "Game"
+  }
 }
