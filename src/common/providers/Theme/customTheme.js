@@ -1,11 +1,19 @@
 import { createTheme } from '@mui/material';
+import darkScrollbar from '@mui/material/darkScrollbar';
 
 import lightPalette from './lightPalette';
+import darkPalette from './darkPalette';
 
-const createNetzschTheme = mode =>
+const createCustomTheme = mode =>
   createTheme({
-    palette: lightPalette,
-    components: {}
+    palette: mode === 'dark' ? darkPalette : lightPalette
+    // components: {
+    //   MuiCssBaseline: {
+    //     styleOverrides: themeParam => ({
+    //       body: mode === 'dark' ? darkScrollbar() : null
+    //     })
+    //   }
+    // }
   });
 
-export default createNetzschTheme;
+export default createCustomTheme;
