@@ -1,5 +1,5 @@
 // https://experience.sap.com/fiori-design-web/colors/
-import { yellow, pink } from '@mui/material/colors';
+import { blue, deepOrange } from '@mui/material/colors';
 
 export default {
   mode: 'light',
@@ -7,6 +7,6 @@ export default {
     black: '#000',
     white: '#FFF'
   },
-  primary: yellow,
-  secondary: pink
+  primary: blue,
+  secondary: deepOrange
 };

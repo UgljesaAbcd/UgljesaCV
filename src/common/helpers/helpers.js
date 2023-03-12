@@ -1,3 +1,15 @@
+import { template, templateSettings } from 'lodash';
+
+// templateVariables - is object that contains key value pair that will replace :key name in template (as variable)
+const insertTemplateVariables = (providedTemplate, templateVariables) => {
+  if (!templateVariables) {
+    return providedTemplate;
+  }
+  templateSettings.interpolate = /:([A-z]*)/g;
+  // replacing the ':id' with id value
+  return template(providedTemplate)(templateVariables);
+};
+
 const filterEmptyStrings = filterObject => {
   if (!filterObject) return;
   let checkedObj = { ...filterObject };
@@ -109,5 +121,6 @@ export {
   division,
   subtraction,
   convertToNumber,
-  convertFileToBase64
+  convertFileToBase64,
+  insertTemplateVariables
 };

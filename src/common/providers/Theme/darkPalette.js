@@ -1,4 +1,4 @@
-import { red, grey } from '@mui/material/colors';
+import { blueGrey, cyan } from '@mui/material/colors';
 
 export default {
   mode: 'dark',
@@ -6,6 +6,6 @@ export default {
     black: '#000',
     white: '#FFF'
   },
-  primary: grey,
-  secondary: red
+  primary: blueGrey,
+  secondary: cyan
 };
