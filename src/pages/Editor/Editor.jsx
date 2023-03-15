@@ -51,7 +51,7 @@ const Editor = () => {
         <Box sx={{ backgroundColor: '#282A36' }}>
           <LiveProvider
             code={editorCode}
-            scope={{ useState, usePrevious, Grid, Button }}
+            scope={{ useState, usePrevious, Grid, Button, Typography }}
             theme={currentTheme}
           >
             <Box

@@ -1,5 +1,5 @@
 // https://experience.sap.com/fiori-design-web/colors/
-import { blue, deepOrange } from '@mui/material/colors';
+import { blue, deepOrange, orange, amber } from '@mui/material/colors';
 
 export default {
   mode: 'light',
@@ -8,5 +8,5 @@ export default {
     white: '#FFF'
   },
   primary: blue,
-  secondary: deepOrange
+  secondary: orange
 };

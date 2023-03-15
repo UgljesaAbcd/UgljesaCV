@@ -108,10 +108,14 @@ function MyCode() {
           Reset
         </Button>
       </Grid>
-      <Grid sx={{pt: 2}} >{"Number state value: " + stateNumber}</Grid>
-      <Grid sx={{pb: 2}} >
-        {"Previous Number state value: " + previousStateNumber}
+      <Grid sx={{ pt: 2 }}>
+        <Typography as='span'>{'Number state value: '}</Typography>
+        <Typography as='span' color="primary" >{stateNumber}</Typography>
       </Grid>
+      <Grid sx={{ pt: 2 }}>
+      <Typography as='span'>{'Previous Number state value: '}</Typography>
+      <Typography as='span' color="primary" >{previousStateNumber}</Typography>
+    </Grid>
     </Grid>
   );
 }

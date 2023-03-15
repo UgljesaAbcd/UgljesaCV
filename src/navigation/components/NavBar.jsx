@@ -10,7 +10,14 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useTheme } from '@mui/material/styles';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useTheme, styled, alpha } from '@mui/material/styles';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import EditIcon from '@mui/icons-material/Edit';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Modal from '@mui/material/Modal';
 
 import { setColorMode } from '@common/slices/userSlice';
 
@@ -30,11 +37,78 @@ const NAVBAR_OPTIONS = {
   optionFour: 'GAME'
 };
 
+const StyledMenu = styled(props => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right'
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right'
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === 'light'
+        ? 'rgb(55, 65, 81)'
+        : theme.palette.grey[300],
+    boxShadow:
+      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    '& .MuiMenu-list': {
+      padding: '4px 0'
+    },
+    '& .MuiMenuItem-root': {
+      '& .MuiSvgIcon-root': {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5)
+      },
+      '&:active': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        )
+      }
+    }
+  }
+}));
+
+const styleModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+};
+
 const NavBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openModal, setOpenModal] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => setAnchorEl(null);
+
+  const handleModalOpen = () => setOpenModal(true);
+
+  const handleModalClose = () => setOpenModal(false);
 
   const handleChange = (_, newValue) => {
     const path = {
@@ -60,6 +134,14 @@ const NavBar = () => {
         background: theme.palette.primary.main
       }}
     >
+      <Modal
+        open={openModal}
+        onClose={handleModalClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={styleModal}>test modal</Box>
+      </Modal>
       <Box sx={{ float: 'left' }}>
         <Tabs
           value={value}
@@ -81,21 +163,53 @@ const NavBar = () => {
           <Tab label={NAVBAR_OPTIONS.optionFour} {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <Box sx={{ float: 'right', display: 'flex' }}>
-        <Typography sx={{ mt: 1.5 }}>{theme.palette.mode} mode</Typography>
+      <Box sx={{ float: 'right', mt: 0.5 }}>
         <IconButton
-          sx={{ ml: 1, mt: 0.5 }}
-          onClick={() =>
-            toggleColorMode(theme.palette.mode === 'dark' ? 'light' : 'dark')
-          }
-          color='inherit'
+          id='demo-customized-button'
+          aria-controls={open ? 'demo-customized-menu' : undefined}
+          aria-haspopup='true'
+          aria-expanded={open ? 'true' : undefined}
+          variant='contained'
+          disableElevation
+          onClick={handleClick}
+          endIcon={<KeyboardArrowDownIcon />}
         >
-          {theme.palette.mode === 'dark' ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
+          <SettingsIcon />
         </IconButton>
+        <StyledMenu
+          id='demo-customized-menu'
+          MenuListProps={{
+            'aria-labelledby': 'demo-customized-button'
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem
+            onClick={() => {
+              handleModalOpen();
+              handleClose();
+            }}
+            disableRipple
+          >
+            <EditIcon />
+            Customize themes
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              toggleColorMode(theme.palette.mode === 'dark' ? 'light' : 'dark');
+              handleClose();
+            }}
+            disableRipple
+          >
+            {theme.palette.mode === 'dark' ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+            <Typography>{theme.palette.mode} mode</Typography>
+          </MenuItem>
+        </StyledMenu>
       </Box>
     </AppBar>
   );
