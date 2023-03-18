@@ -4,8 +4,11 @@ import { OrbitControls, Stars } from '@react-three/drei';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import EarthSphere from './components/EarthSphere';
+import SaturnSphere from './components/SaturnSphere';
 
 const timeSpeedOptions = [
   { key: 1, value: 1, text: 1 },
@@ -15,6 +18,7 @@ const timeSpeedOptions = [
 ];
 
 const My3D = () => {
+  const [currentPlanet, setCurrentPlanet] = useState('earth');
   const [timeSpeed, setTimeSpeed] = useState({
     key: 86400,
     value: 86400,
@@ -23,6 +27,7 @@ const My3D = () => {
   const [initTime] = useState(new Date());
   const [orbitVisible, setOrbitVisible] = useState(true);
   const [showNames, setShowNames] = useState(true);
+
   const providedProps = {
     initTime,
     orbitVisible,
@@ -39,20 +44,33 @@ const My3D = () => {
         overflowY: 'scroll'
       }}
     >
-      <Button>Click</Button>
+      <Select
+        value={currentPlanet}
+        onChange={e => setCurrentPlanet(e.target.value)}
+      >
+        <MenuItem value={'earth'}>Earth</MenuItem>
+        <MenuItem value={'saturn'}>Saturn</MenuItem>
+      </Select>
+
       <Box
         sx={{
-          width: '600px',
+          width: '100%',
           px: 2,
           pt: 1,
-          height: '400px',
+          height: 'calc(100vh - 130px)',
           backgroundColor: 'black'
         }}
       >
         <Canvas>
-          <OrbitControls maxDistance={400} minDistance={10} />
+          <OrbitControls maxDistance={400} minDistance={20} />
           <ambientLight intensity={1} />
-          <EarthSphere {...providedProps} />
+          {
+            {
+              earth: <EarthSphere {...providedProps} />,
+              saturn: <SaturnSphere {...providedProps} />
+            }[currentPlanet]
+          }
+
           <Stars
             radius={200} // Radius of the inner sphere (default=100)
             depth={50} // Depth of area where stars should fit (default=50)
