@@ -1,33 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-location';
 import { Formik, Field, Form } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 import { ROUTER_PATHS } from '@common/constants';
 import { loginSubmit } from '@common/slices/userSlice';
-
-const FORM_CONFIG = [
-  {
-    id: 'email',
-    name: 'email',
-    label: 'Email',
-    component: TextField
-  },
-  {
-    id: 'password',
-    name: 'password',
-    label: 'Password',
-    component: TextField
-  }
-];
+import FORM_CONFIG from './config/formConfig';
+import { validateLoginSchema } from './config/validateLogin';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -47,11 +34,14 @@ const Login = () => {
         </Typography>
         <Paper elevation={3} sx={{ p: 2 }}>
           <Formik
+            // enableReinitialize
+            validateOnMount
             initialValues={{
               email: '',
               password: ''
             }}
             onSubmit={(values, actions) => onSubmit(values, actions)}
+            validationSchema={validateLoginSchema}
           >
             {({
               isSubmitting,
@@ -60,18 +50,27 @@ const Login = () => {
               isValid,
               setFieldValue,
               values,
-              setValues
+              setValues,
+              handleBlur,
+              errors,
+              touched
             }) => (
               <Form>
                 {FORM_CONFIG.map(field => (
-                  <FormControl key={field.id} fullWidth sx={{ pb: 1 }}>
+                  <FormControl key={field.id} fullWidth sx={{ pb: 3 }}>
                     <Field
                       id={field.id}
                       name={field.name}
                       label={field.label}
                       onChange={handleChange}
                       component={field.component}
+                      onBlur={handleBlur}
                     />
+                    {touched[field.name] && errors[field.name] && (
+                      <FormHelperText id='component-helper-text'>
+                        {errors[field.name]}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 ))}
 
@@ -81,6 +80,7 @@ const Login = () => {
                   fullWidth
                   sx={{ mb: 5 }}
                   onClick={handleSubmit}
+                  disabled={Boolean(errors?.email || errors?.password)}
                 >
                   Login
                 </Button>

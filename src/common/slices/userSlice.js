@@ -31,7 +31,8 @@ export const initialState = {
   theme: 'light',
   token: auth?.token,
   email: auth?.email ?? '',
-  isLoading: false
+  isLoading: false,
+  company: auth?.company ?? ''
 };
 
 export const loginSubmit = createAsyncThunk('user/login', userData =>
@@ -94,5 +95,5 @@ export const selectLoggedIn = state => state.user.isLoggedIn;
 
 const { actions, reducer } = userSlice;
 
-export const { setLanguage, setColorMode, setUserState } = actions;
+export const { setLanguage, setColorMode, setUserState, setLogout } = actions;
 export default reducer;

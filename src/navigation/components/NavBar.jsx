@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useTheme, styled, alpha } from '@mui/material/styles';
 
 import Menu from '@mui/material/Menu';
@@ -19,7 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Modal from '@mui/material/Modal';
 
-import { setColorMode } from '@common/slices/userSlice';
+import { setColorMode, setLogout } from '@common/slices/userSlice';
 
 import { ROUTER_PATHS } from '@common/constants';
 
@@ -98,7 +99,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openModal, setOpenModal] = React.useState(null);
+  const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
 
   const handleClick = event => {
@@ -123,6 +124,10 @@ const NavBar = () => {
 
   const toggleColorMode = mode => {
     dispatch(setColorMode(mode));
+  };
+
+  const onLogoutClick = () => {
+    dispatch(setLogout());
   };
 
   return (
@@ -170,9 +175,7 @@ const NavBar = () => {
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
           variant='contained'
-          disableElevation
           onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
         >
           <SettingsIcon />
         </IconButton>
@@ -185,6 +188,10 @@ const NavBar = () => {
           open={open}
           onClose={handleClose}
         >
+          <MenuItem onClick={onLogoutClick} disableRipple>
+            <LogoutIcon />
+            Logout
+          </MenuItem>
           <MenuItem
             onClick={() => {
               handleModalOpen();
