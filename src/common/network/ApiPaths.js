@@ -3,5 +3,6 @@ export const JSON_PLACEHOLDER_PATHS = Object.freeze({
 });
 
 export const USER = Object.freeze({
-  GET_USER: '/user'
+  GET_USER: '/user',
+  LOGIN: '/user/login'
 });

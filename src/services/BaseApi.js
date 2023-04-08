@@ -7,8 +7,8 @@ import {
 } from '@common/helpers/helpers';
 
 const getDefaultOptions = ({
-  // baseURL = API.API_URL,
-  baseURL = '',
+  baseURL = API.API_URL,
+  // baseURL = '',
   headers = {
     'Content-Type': 'application/json'
   },

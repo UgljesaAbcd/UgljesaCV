@@ -1,5 +1,5 @@
 const API = {
-  API_URL: process.env.REACT_APP_API_URL
+  API_URL: process.env.REACT_APP_SERVER_BE_API_URL
 };
 
 const NETWORK_STATUSES = {
@@ -13,6 +13,8 @@ const ROUTER_PATHS = Object.freeze({
   EDITOR: '/editor',
   _3D: '/3d',
   GAME: '/game',
+  LOGIN: '/login',
+  REGISTER: '/register',
   OTHER: '*'
 });
 

@@ -3,6 +3,8 @@ import Editor from '@pages/Editor/Editor';
 import Secret from '@navigation/components/Secret';
 import My3D from '@pages/My3D/My3D';
 import Game from '@pages/Game/Game';
+import Login from '@pages/Login/Login';
+import Register from '@pages/Register/Register';
 
 import { ROUTER_PATHS } from '@common/constants';
 
@@ -28,8 +30,18 @@ export default isLoggedIn => [
     element: <Game />
   },
   {
+    path: ROUTER_PATHS.REGISTER,
+    exact: true,
+    element: <Register />
+  },
+  {
+    path: ROUTER_PATHS.LOGIN,
+    exact: true,
+    element: <Login />
+  },
+  {
     path: ROUTER_PATHS.OTHER,
     exact: true,
-    element: <HomePage />
+    element: isLoggedIn ? <HomePage /> : <Login />
   }
 ];
