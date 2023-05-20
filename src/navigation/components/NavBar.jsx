@@ -192,7 +192,7 @@ const NavBar = () => {
             <LogoutIcon />
             Logout
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             onClick={() => {
               handleModalOpen();
               handleClose();
@@ -201,7 +201,7 @@ const NavBar = () => {
           >
             <EditIcon />
             Customize themes
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             onClick={() => {
               toggleColorMode(theme.palette.mode === 'dark' ? 'light' : 'dark');
@@ -214,7 +214,11 @@ const NavBar = () => {
             ) : (
               <Brightness4Icon />
             )}
-            <Typography>{theme.palette.mode} mode</Typography>
+            <Typography>
+              {theme.palette.mode === 'dark'
+                ? 'Switch to light mode'
+                : 'Switch to dark mode'}
+            </Typography>
           </MenuItem>
         </StyledMenu>
       </Box>

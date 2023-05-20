@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-location';
 import { Formik, Field, Form } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -12,18 +12,39 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
 import { ROUTER_PATHS } from '@common/constants';
+import { TOAST_INITIAL_STATE, TOAST_ERROR_STATE } from '@common/toastConstants';
 import { loginSubmit } from '@common/slices/userSlice';
+import Toast from '@components/Toast/Toast';
 import FORM_CONFIG from './config/formConfig';
 import { validateLoginSchema } from './config/validateLogin';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onSubmit = async (values, actions) => {
-    dispatch(loginSubmit(values));
+
+  const [uploadToastState, setUploadToastState] = useState(TOAST_INITIAL_STATE);
+
+  const setUploadToastToInitial = () =>
+    setUploadToastState(TOAST_INITIAL_STATE);
+
+  const onSubmit = async values => {
+    dispatch(loginSubmit(values))
+      .unwrap()
+      .catch(err => {
+        setUploadToastState({
+          ...TOAST_ERROR_STATE,
+          message: err.message
+        });
+      });
   };
   return (
     <Container maxWidth='xs' sx={{ height: '100vh', overflowY: 'auto' }}>
+      <Toast
+        open={uploadToastState.open}
+        handleClose={setUploadToastToInitial}
+        status={uploadToastState.status}
+        message={uploadToastState.message}
+      />
       <Box sx={{ my: 3 }}>
         <Typography variant='h4' sx={{ mb: 3 }}>
           Welcome to my CV
@@ -34,27 +55,15 @@ const Login = () => {
         </Typography>
         <Paper elevation={3} sx={{ p: 2 }}>
           <Formik
-            // enableReinitialize
             validateOnMount
             initialValues={{
               email: '',
               password: ''
             }}
-            onSubmit={(values, actions) => onSubmit(values, actions)}
+            onSubmit={values => onSubmit(values)}
             validationSchema={validateLoginSchema}
           >
-            {({
-              isSubmitting,
-              handleSubmit,
-              handleChange,
-              isValid,
-              setFieldValue,
-              values,
-              setValues,
-              handleBlur,
-              errors,
-              touched
-            }) => (
+            {({ handleSubmit, handleChange, handleBlur, errors, touched }) => (
               <Form>
                 {FORM_CONFIG.map(field => (
                   <FormControl key={field.id} fullWidth sx={{ pb: 3 }}>
@@ -65,6 +74,7 @@ const Login = () => {
                       onChange={handleChange}
                       component={field.component}
                       onBlur={handleBlur}
+                      error={Boolean(touched[field.name] && errors[field.name])}
                     />
                     {touched[field.name] && errors[field.name] && (
                       <FormHelperText id='component-helper-text'>

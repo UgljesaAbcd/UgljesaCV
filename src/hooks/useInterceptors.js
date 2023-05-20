@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { NETWORK_STATUSES } from '@common/constants';
 
-const useInterceptors = (token, dispatch, navigate, userId) => {
+const useInterceptors = token => {
   useEffect(() => {
     const handleErrors = err => {
       switch (err?.response?.status) {
@@ -21,8 +21,12 @@ const useInterceptors = (token, dispatch, navigate, userId) => {
           break;
       }
     };
+    if (token) {
+      axios.defaults.headers.authorization = `Bearer ${token}`;
+    } else {
+      axios.defaults.headers.authorization = undefined;
+    }
 
-    // axios.defaults.headers.authorization = `Bearer ${token}`;
     axios.interceptors.response.use(
       res => res,
       err => {

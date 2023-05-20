@@ -35,14 +35,16 @@ export const initialState = {
   company: auth?.company ?? ''
 };
 
-export const loginSubmit = createAsyncThunk('user/login', userData =>
-  postByPathAndData({
+export const loginSubmit = createAsyncThunk('user/login', async userData => {
+  const response = await postByPathAndData({
     path: USER.LOGIN,
     data: userData
-  })
-    .then(response => response.data)
-    .catch(error => error)
-);
+  });
+  if (response?.status !== 200) {
+    throw { ...response.response.data };
+  }
+  return response.data;
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -64,7 +66,7 @@ export const userSlice = createSlice({
       state.theme = initialState.theme;
       state.firstName = initialState.firstName;
       state.lastName = initialState.lastName;
-      state.isLoggedIn = initialState.isLoggedIn;
+      state.isLoggedIn = false;
       state.company = initialState.company;
     }
   },
@@ -73,12 +75,12 @@ export const userSlice = createSlice({
       .addCase(loginSubmit.fulfilled, (state, { payload }) => {
         setLocalStorage('auth', { ...payload, isLoggedIn: true });
         state.email = payload.email;
-        state.token = payload.token;
-        state.theme = payload.theme;
-        state.firstName = payload.firstName;
-        state.lastName = payload.lastName;
+        state.token = payload?.token;
+        state.theme = payload?.theme;
+        state.firstName = payload?.firstName;
+        state.lastName = payload?.lastName;
         state.isLoggedIn = true;
-        state.company = payload.company;
+        state.company = payload?.company;
       })
       .addCase(loginSubmit.pending, state => {
         state.isLoading = true;
@@ -92,6 +94,7 @@ export const userSlice = createSlice({
 export const selectLanguage = state => state.user.lang;
 export const selectColorMode = state => state.user.colorMode;
 export const selectLoggedIn = state => state.user.isLoggedIn;
+export const selectToken = state => state.user.token;
 
 const { actions, reducer } = userSlice;
 

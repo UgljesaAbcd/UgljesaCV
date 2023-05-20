@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, Router, ReactLocation, useNavigate } from 'react-location';
 import { useSelector } from 'react-redux';
 
-import { selectLoggedIn } from '@common/slices/userSlice';
+import { selectLoggedIn, selectToken } from '@common/slices/userSlice';
 
 import useInterceptors from '@hooks/useInterceptors';
 
@@ -23,7 +23,7 @@ const PublicRoute = ({ isLoggedIn }) => {
   ) {
     navigate({ to: ROUTER_PATHS.LOGIN, replace: false });
   }
-  useInterceptors();
+
   return (
     <>
       <Outlet />
@@ -34,10 +34,13 @@ const PublicRoute = ({ isLoggedIn }) => {
 const PrivateRoute = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   let pathname = window.location.pathname;
+  if (!isLoggedIn) {
+    navigate({ to: ROUTER_PATHS.LOGIN, replace: false });
+  }
   if (isLoggedIn && pathname === ROUTER_PATHS.LOGIN) {
     navigate({ to: ROUTER_PATHS.HOME, replace: false });
   }
-  useInterceptors();
+
   return (
     <>
       <NavBar />
@@ -48,7 +51,8 @@ const PrivateRoute = ({ isLoggedIn }) => {
 
 const AppRouter = () => {
   const isLoggedIn = useSelector(selectLoggedIn);
-
+  const token = useSelector(selectToken);
+  useInterceptors(token);
   return (
     <Router location={location} routes={routes(Boolean(isLoggedIn))}>
       {Boolean(isLoggedIn) ? (

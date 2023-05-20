@@ -8,34 +8,40 @@ const status = {
 
 const DEFAULT_ERROR_MESSAGE = 'Something went wrong.';
 
-const UPLOAD_TOAST_INITIAL_STATE = {
+const TOAST_INITIAL_STATE = {
   open: false,
   message: '',
   status: status.none
 };
 
-const UPLOAD_TOAST_SUCCESS_STATE = {
-  open: true,
-  message: 'Upload done.',
-  status: status.success
-};
-
-const REPLACE_TOAST_SUCCESS_STATE = {
-  open: true,
-  message: 'Replace done.',
-  status: status.success
-};
-
-const UPLOAD_TOAST_ERROR_STATE = {
+const TOAST_ERROR_STATE = {
   open: true,
   message: DEFAULT_ERROR_MESSAGE,
   status: status.error
 };
 
+const TOAST_WARNING_STATE = {
+  open: true,
+  message: DEFAULT_ERROR_MESSAGE,
+  status: status.warning
+};
+
+const TOAST_SUCCESS_STATE = {
+  open: true,
+  message: 'Done successfully.',
+  status: status.success
+};
+
+const TOAST_INFO_STATE = {
+  open: true,
+  message: '',
+  status: status.info
+};
+
 export {
-  UPLOAD_TOAST_INITIAL_STATE,
-  UPLOAD_TOAST_SUCCESS_STATE,
-  REPLACE_TOAST_SUCCESS_STATE,
-  UPLOAD_TOAST_ERROR_STATE,
-  DEFAULT_ERROR_MESSAGE
+  TOAST_INITIAL_STATE,
+  TOAST_ERROR_STATE,
+  TOAST_WARNING_STATE,
+  TOAST_SUCCESS_STATE,
+  TOAST_INFO_STATE
 };
